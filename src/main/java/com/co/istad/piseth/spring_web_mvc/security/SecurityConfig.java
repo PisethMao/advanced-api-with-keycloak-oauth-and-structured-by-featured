@@ -23,6 +23,14 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(endpoint -> endpoint
                 .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/orders/**").permitAll()
+                .requestMatchers(
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v3/api-docs",
+                        "/v3/api-docs/**",
+                        "/v3/api-docs/swagger-config").permitAll()
+                .requestMatchers("/scalar/**", "/scalar").permitAll()
                 .anyRequest().authenticated());
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();

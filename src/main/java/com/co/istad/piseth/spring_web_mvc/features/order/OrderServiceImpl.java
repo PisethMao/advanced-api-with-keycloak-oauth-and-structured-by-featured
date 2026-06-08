@@ -7,6 +7,7 @@ import com.co.istad.piseth.spring_web_mvc.features.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public OrderResponse createNew(CreateOrderRequest createOrderRequest) {
+    public OrderResponse createNew(CreateOrderRequest createOrderRequest, Jwt jwt) {
         List<OrderLine> validOrderLine = new ArrayList<>();
         final Order order = orderMapper.mapCreateOrderRequestToOrder(createOrderRequest);
         boolean isValid = createOrderRequest.orderLines().stream()
@@ -46,7 +47,8 @@ public class OrderServiceImpl implements OrderService {
         }
         order.setCreatedAt(Instant.now());
         order.setIsDeleted(false);
-        order.setOrderedBy("ADMIN");
+//        order.setOrderedBy(jwt.getSubject());
+        order.setOrderedBy(jwt.getClaimAsString("preferred_username"));
         order.setOrderLines(validOrderLine);
         Order savedOrder = orderRepository.save(order);
         return orderMapper.mapOrderToOrderResponse(savedOrder);

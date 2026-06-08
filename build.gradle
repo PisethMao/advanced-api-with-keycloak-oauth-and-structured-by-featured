@@ -26,6 +26,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-scalar:2.8.17'
     implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
     implementation 'org.mapstruct:mapstruct:1.7.0.Beta1'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.7.0.Beta1'
