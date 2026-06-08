@@ -22,6 +22,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(endpoint -> endpoint
                 .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                 .anyRequest().authenticated());
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();

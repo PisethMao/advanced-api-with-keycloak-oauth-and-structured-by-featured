@@ -23,7 +23,9 @@ public class Order {
     @Column(nullable = false)
     private String orderedBy;
     @Column(nullable = false)
-    private boolean isDeleted;
-    @OneToMany(mappedBy = "order")
+    private Boolean isDeleted;
+    @Column(length = 50)
+    private String remark;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderLine> orderLines;
 }
