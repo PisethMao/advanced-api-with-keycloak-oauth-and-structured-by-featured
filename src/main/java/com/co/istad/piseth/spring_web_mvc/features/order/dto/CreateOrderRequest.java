@@ -1,6 +1,5 @@
 package com.co.istad.piseth.spring_web_mvc.features.order.dto;
 
-import com.co.istad.piseth.spring_web_mvc.features.order.OrderLine;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 

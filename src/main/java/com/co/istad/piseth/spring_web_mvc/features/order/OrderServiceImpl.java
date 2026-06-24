@@ -4,9 +4,12 @@ import com.co.istad.piseth.spring_web_mvc.features.order.dto.CreateOrderRequest;
 import com.co.istad.piseth.spring_web_mvc.features.order.dto.OrderResponse;
 import com.co.istad.piseth.spring_web_mvc.features.product.Product;
 import com.co.istad.piseth.spring_web_mvc.features.product.ProductRepository;
+import com.co.istad.piseth.spring_web_mvc.security.AuthUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,7 +27,18 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public OrderResponse createNew(CreateOrderRequest createOrderRequest, Jwt jwt) {
+    public OrderResponse createNew(CreateOrderRequest createOrderRequest) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        assert authentication != null;
+//        IO.println("Authentication: " + authentication);
+//        IO.println("Authentication: " + authentication.getName());
+//        IO.println("User: " + authentication.getPrincipal());
+//        Jwt jwt = (Jwt) authentication.getPrincipal();
+//        IO.println("JWT: " + authentication.getCredentials());
+//        IO.println("JWT: " + authentication.getPrincipal());
+//        assert jwt != null;
+//        IO.println("JWT: " + jwt.getTokenValue());
+//        IO.println("JWT: " + jwt.getSubject());
         List<OrderLine> validOrderLine = new ArrayList<>();
         final Order order = orderMapper.mapCreateOrderRequestToOrder(createOrderRequest);
         boolean isValid = createOrderRequest.orderLines().stream()
@@ -47,8 +61,8 @@ public class OrderServiceImpl implements OrderService {
         }
         order.setCreatedAt(Instant.now());
         order.setIsDeleted(false);
-//        order.setOrderedBy(jwt.getSubject());
-        order.setOrderedBy(jwt.getClaimAsString("preferred_username"));
+        order.setOrderedBy(AuthUtils.extractUserId());
+//        order.setOrderedBy(jwt.getClaimAsString("preferred_username"));
         order.setOrderLines(validOrderLine);
         Order savedOrder = orderRepository.save(order);
         return orderMapper.mapOrderToOrderResponse(savedOrder);

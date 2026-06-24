@@ -20,3 +20,5 @@ spring:
     password: Piseth1711*#
   application:
     name: advanced-api
+file-upload:
+  server-path: D:/ISTAD/Year 2/Semester 2/Back-end Dev II/Code/fileupload/

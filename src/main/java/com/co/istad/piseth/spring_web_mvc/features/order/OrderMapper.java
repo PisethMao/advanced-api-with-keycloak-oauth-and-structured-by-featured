@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
     Order mapCreateOrderRequestToOrder(CreateOrderRequest createOrderRequest);
+
     OrderResponse mapOrderToOrderResponse(Order order);
-    default List<OrderLineDto> mapOrderLineToOrderLineDto(List<OrderLine> orderLine){
+
+    default List<OrderLineDto> mapOrderLineToOrderLineDto(List<OrderLine> orderLine) {
         return orderLine.stream()
                 .map(orderLines -> OrderLineDto.builder()
                         .productCode(orderLines.getProduct().getCode())
