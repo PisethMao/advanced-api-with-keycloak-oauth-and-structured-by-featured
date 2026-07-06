@@ -38,8 +38,11 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/v3/api-docs",
                         "/v3/api-docs/**",
-                        "/v3/api-docs/swagger-config").permitAll()
-                .requestMatchers("/scalar/**", "/scalar").permitAll()
+                        "/v3/api-docs/swagger-config",
+                        "/api/v1/files/**",
+                        "/file/**"
+                ).permitAll()
+                .requestMatchers("/scalar/**", "/scalar", "/api/v1/files/**").permitAll()
                 .anyRequest().authenticated());
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();

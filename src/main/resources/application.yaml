@@ -20,5 +20,11 @@ spring:
     password: Piseth1711*#
   application:
     name: advanced-api
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
 file-upload:
+  client-path: /file
   server-path: D:/ISTAD/Year 2/Semester 2/Back-end Dev II/Code/fileupload/
+  base-uri: http://localhost:${server.port}${file-upload.client-path}

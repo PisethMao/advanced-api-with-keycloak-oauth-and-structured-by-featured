@@ -1,8 +1,10 @@
 package com.co.istad.piseth.spring_web_mvc.features.fileupload;
 
-import com.co.istad.piseth.spring_web_mvc.features.fileupload.dto.FileResponse;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FileUploadRepository {
-    FileResponse upload(MultipartFile file);
+import java.util.Optional;
+
+public interface FileUploadRepository extends JpaRepository<FileUpload, Integer> {
+    Optional<FileUpload> findByFileName(String name);
+    boolean existsByFileName(String fileName);
 }

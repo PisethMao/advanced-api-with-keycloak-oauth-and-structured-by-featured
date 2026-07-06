@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record FileResponse(
         String name,
+        String fileExt,
         Long size,
         String mediaType,
         String uri
