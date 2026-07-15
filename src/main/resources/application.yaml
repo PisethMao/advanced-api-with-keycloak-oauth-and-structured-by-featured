@@ -15,7 +15,7 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/e_commerce
+    url: jdbc:postgresql://localhost:8432/db_ecommerce
     username: postgres
     password: Piseth1711*#
   application:
@@ -28,3 +28,8 @@ file-upload:
   client-path: /file
   server-path: D:/ISTAD/Year 2/Semester 2/Back-end Dev II/Code/fileupload/
   base-uri: http://localhost:${server.port}${file-upload.client-path}
+keycloak:
+  server-url: http://localhost:8080
+  client-id: client-test
+  client-secret: VWpPCO9lxUFGPCRMn7y3chV9uPtK0tWh
+  realm: myrealm

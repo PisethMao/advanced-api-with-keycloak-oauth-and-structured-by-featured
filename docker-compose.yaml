@@ -1,0 +1,20 @@
+services:
+  ecommerce-db:
+    image: postgres:18.4-trixie
+    container_name: ecommerce-db
+    ports:
+      - "8432:5432"
+    environment:
+      POSTGRES_DB: db_ecommerce
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Piseth1711*#
+    volumes:
+      - ./init_scripts:/docker-entrypoint-initdb.d:ro
+      - ecommerce-db-vol:/var/lib/postgresql
+    networks:
+      - net
+volumes:
+  ecommerce-db-vol:
+networks:
+  net:
+    external: true

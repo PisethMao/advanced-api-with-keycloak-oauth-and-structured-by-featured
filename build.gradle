@@ -26,6 +26,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.keycloak:keycloak-admin-client:26.0.10'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-scalar:2.8.17'
     implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
