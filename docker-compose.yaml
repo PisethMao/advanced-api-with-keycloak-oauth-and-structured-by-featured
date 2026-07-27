@@ -13,8 +13,58 @@ services:
       - ecommerce-db-vol:/var/lib/postgresql
     networks:
       - net
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.0
+    container_name: keycloak
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://ecommerce-db:5432/db_keycloak
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_HOSTNAME_PORT: ${KC_HOSTNAME_PORT}
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HOSTNAME_URL: ${KC_HOSTNAME_URL}
+      KC_HOSTNAME_ADMIN_URL: ${KC_HOSTNAME_URL}
+      KC_PROXY: edge
+      KC_HTTP_ENABLED: true
+      KC_PROXY_HEADERS: xforwarded
+      KC_CACHE: ispn
+      KC_LOG_LEVEL: INFO
+      KC_METRICS_ENABLED: true
+      KC_HEALTH_ENABLED: true
+      JAVA_OPTS_APPEND: "-Xms512m -Xmx2048m"
+    command: start
+    ports:
+      - "127.0.0.1:9091:8080"
+    volumes:
+      - keycloak-vol:/opt/keycloak/data
+      - ./keycloak/themes:/opt/keycloak/themes
+      - ./keycloak/conf:/opt/keycloak/conf
+    networks:
+      - net
+    depends_on:
+      - ecommerce-db
+    restart: unless-stopped
+  ecommerce-api:
+    image: ecommerce-api:latest
+    build:
+      context: .
+    container_name: ecommerce-api
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ecommerce-db:5432/db_ecommerce
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://localhost:9091/realms/ecommerce
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI=http://keycloak:8080/realms/ecommerce/protocol/openid-connect/certs
+    networks:
+      - net
 volumes:
   ecommerce-db-vol:
+  keycloak-vol:
 networks:
   net:
     external: true

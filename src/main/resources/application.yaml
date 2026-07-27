@@ -5,7 +5,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/myrealm
+          issuer-uri: http://localhost:9091/realms/ecommerce
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,7 +19,7 @@ spring:
     username: postgres
     password: Piseth1711*#
   application:
-    name: advanced-api
+    name: ecommerce
   servlet:
     multipart:
       max-file-size: 10MB
@@ -29,7 +29,7 @@ file-upload:
   server-path: D:/ISTAD/Year 2/Semester 2/Back-end Dev II/Code/fileupload/
   base-uri: http://localhost:${server.port}${file-upload.client-path}
 keycloak:
-  server-url: http://localhost:8080
+  server-url: http://localhost:9091
   client-id: client-test
-  client-secret: VWpPCO9lxUFGPCRMn7y3chV9uPtK0tWh
-  realm: myrealm
+  client-secret: 5VSuYuq0pUBrMfOyiaEwmQq290Bbxrfx5Yygz0j50RASkHRZ5azfZ2duGKJTAOCkFpOc7J6oqqzkDU1FveAMEf
+  realm: ecommerce
