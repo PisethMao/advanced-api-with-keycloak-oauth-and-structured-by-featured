@@ -33,3 +33,9 @@ keycloak:
   client-id: client-test
   client-secret: 5VSuYuq0pUBrMfOyiaEwmQq290Bbxrfx5Yygz0j50RASkHRZ5azfZ2duGKJTAOCkFpOc7J6oqqzkDU1FveAMEf
   realm: ecommerce
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: next-js
+      client-secret: U9sIYC0kHpaCNDs0DHen19YsW9enBlwD8H2tVYkLEgxiUThcOhlKMl55TWvZ2GCtVecROsP4VuNzTivwIbt6pQ
+      use-pkce-with-authorization-code-grant: true

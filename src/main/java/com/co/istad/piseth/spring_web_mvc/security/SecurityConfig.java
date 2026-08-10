@@ -43,7 +43,7 @@ public class SecurityConfig {
                         "/file/**",
                         "/api/v1/auth/register"
                 ).permitAll()
-                .requestMatchers("/scalar/**", "/scalar", "/api/v1/files/**").permitAll()
+                .requestMatchers("/scalar/**", "/scalar").permitAll()
                 .anyRequest().authenticated());
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();

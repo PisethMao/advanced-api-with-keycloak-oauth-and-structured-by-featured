@@ -2,6 +2,8 @@ package com.co.istad.piseth.spring_web_mvc.features.auth;
 
 import com.co.istad.piseth.spring_web_mvc.features.auth.dto.RegisterRequest;
 import com.co.istad.piseth.spring_web_mvc.features.auth.dto.RegisterResponse;
+import com.co.istad.piseth.spring_web_mvc.features.userprofile.UserProfile;
+import com.co.istad.piseth.spring_web_mvc.features.userprofile.UserProfileRepository;
 import com.co.istad.piseth.spring_web_mvc.security.KeycloakProperties;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final Keycloak keycloak;
     private final KeycloakProperties keycloakProperties;
+    private final UserProfileRepository userProfileRepository;
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -77,6 +80,10 @@ public class AuthServiceImpl implements AuthService {
                 UserRepresentation createdUser = usersResource
                         .get(keycloakUserId)
                         .toRepresentation();
+
+                UserProfile userProfile = new UserProfile();
+                userProfile.setUserId(keycloakUserId);
+                userProfileRepository.save(userProfile);
 
                 return RegisterResponse.builder()
                         .keycloakUserId(createdUser.getId())
